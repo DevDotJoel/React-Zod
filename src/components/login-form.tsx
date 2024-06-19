@@ -2,6 +2,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 
 import {z} from 'zod';
+import { InputForm } from './ui/input-form';
 
 const schema=z.object({
     email:z.string().email(),
@@ -15,7 +16,7 @@ export type LoginFormProps={
 }
 export const LoginForm= ({submit}:LoginFormProps) => {
 
-    const{register,handleSubmit,setError,formState:{errors}}=useForm<FormFields>({
+    const{control,handleSubmit,formState:{errors}}=useForm<FormFields>({
         defaultValues:undefined,
         resolver:zodResolver(schema)
     })
@@ -32,24 +33,24 @@ export const LoginForm= ({submit}:LoginFormProps) => {
     </div>
     <div className="row mt-2">
         <div className="col">
-        <label htmlFor="email" className="form-label">Email</label>
-        <input type="email" className={`form-control ${errors.email?"is-invalid":""}` }{...register("email")}/>
-        {errors.email && (
-              <span className="invalid-feedback d-block">
-                {errors.email.message}
-              </span>
-            )}
+            <InputForm
+                name='email'
+                label='Email'
+                type='email'
+                control={control}
+                errors={errors}
+            />
         </div>
     </div>
     <div className="row mt-2">
         <div className="col">
-        <label htmlFor="password" className="form-label">Email</label>
-        <input type="password" className={`form-control ${errors.password?"is-invalid":""}` } {...register("password")}/>
-        {errors.password && (
-              <span className="invalid-feedback d-block">
-                {errors.password.message}
-              </span>
-            )}
+        <InputForm
+                name='password'
+                label='Password'
+                type='password'
+                control={control}
+                errors={errors}
+            />
         </div>
     </div>
     <div className="row mt-4 ">
