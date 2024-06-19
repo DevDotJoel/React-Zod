@@ -1,22 +1,32 @@
-import { LoginForm } from "./components/login-form"
-
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import { MainLayout } from "./components/ui/layout/main-layout";
+import { QuizzesPage } from "./features/quizzes/pages/quizzes.page";
+import { CreateQuizPage } from "./features/quizzes/pages/create-quiz.page";
 
 function App() {
-
-  function submit(data:any){
-    console.log(data);
-
-  }
-
+  const router = createBrowserRouter([
+    {
+      path: "/",
+      element: <MainLayout />,
+      children: [
+        {
+          path: "quizzes",
+          element: <QuizzesPage />,
+          children: [],
+        },
+        {
+          path: "quizzes/create",
+          element: <CreateQuizPage />,
+          children: [],
+        },
+      ],
+    },
+  ]);
   return (
     <>
-    <div className="container vh-100 overflow-hidden">
-    <LoginForm submit={submit}/>
-    </div>
-  
- 
+      <RouterProvider router={router} />
     </>
-  )
+  );
 }
 
-export default App
+export default App;
